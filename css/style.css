@@ -21,6 +21,7 @@ html {
 body {
   margin: 0;
   height: 100vh;
+  overflow: hidden;
 }
 
 /* ==========================================================================
@@ -32,7 +33,7 @@ body {
   margin: 0;
 }
 
-/* Sidebar */
+/* Sidebar (desktop) */
 .sidebar {
   width: 250px;
   background: #f5f5f5;
@@ -46,11 +47,12 @@ body {
   text-align: center;
   border-right: 1px solid #ddd;
   transition: background 0.6s ease;
+  z-index: 10;
 }
 
 .sidebar h1 {
   margin: 0 0 0.25em;
-  font-size: 1.25em;
+  font-size: 1.5em;
   color: #222;
 }
 
@@ -144,6 +146,70 @@ body {
 
 .layout.active .sidebar {
   background: #eaeaea;
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .layout {
+    flex-direction: column;
+  }
+
+  /* Sidebar becomes fixed top bar */
+  .sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+    padding: 1em;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #f5f5f5;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 10;
+    transition:
+      box-shadow 0.4s ease,
+      backdrop-filter 0.4s ease,
+      background-color 0.4s ease;
+  }
+
+  /* Deepen shadow and darken background when CV (overlay) is active */
+  .layout.active .sidebar {
+    background: #ececec;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  .sidebar h1 {
+    font-size: 1.25em;
+  }
+
+  .sidebar p {
+    font-size: 0.9em;
+    margin-bottom: 1em;
+  }
+
+  .content {
+    margin-top: 130px;
+    height: calc(100vh - 130px);
+  }
+
+  /* PDF slides vertically on small screens */
+  #pdf-container {
+    top: 100%;
+    left: 0;
+    transform: translateY(0);
+  }
+
+  #pdf-container.visible {
+    transform: translateY(-100%);
+  }
 }
 
 /*
