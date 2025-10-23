@@ -11,6 +11,7 @@
    Base styles: opinionated defaults
    ========================================================================== */
 
+/* Base reset */
 html {
   color: #222;
   font-size: 1em;
@@ -20,29 +21,129 @@ html {
 body {
   margin: 0;
   height: 100vh;
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+.layout {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #f5f5f5;
-}
-
-header {
-  text-align: center;
-  padding: 1em 0;
-  font-family: system-ui, sans-serif;
-  background: #f5f5f5;
-}
-
-header h1 {
+  height: 100vh;
   margin: 0;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: #f5f5f5;
+  padding: 2em 1em;
+  box-sizing: border-box;
+  font-family: system-ui, sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  border-right: 1px solid #ddd;
+  transition: background 0.6s ease;
+}
+
+.sidebar h1 {
+  margin: 0 0 0.25em;
   font-size: 1.5em;
   color: #222;
 }
 
-header p {
-  margin: 0;
+.sidebar p {
+  margin: 0 0 1.5em;
   color: #555;
+}
+
+/* Sidebar button */
+.sidebar button {
+  padding: 0.5em 1em;
+  border: none;
+  background: #222;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
   font-size: 1em;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.2s, color 0.2s;
+}
+
+.sidebar button:hover {
+  background: #444;
+}
+
+/* Focus (keyboard only) */
+.sidebar button:focus-visible {
+  outline: 2px solid #222;
+  outline-offset: 3px;
+  background: #333;
+}
+
+/* Smooth fade for label */
+.sidebar button span {
+  display: inline-block;
+  opacity: 1;
+  transition: opacity 0.3s ease;
+  will-change: opacity;
+}
+
+.sidebar button.fading span {
+  opacity: 0;
+}
+
+/* Content area */
+.content {
+  flex: 1;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Overlay dim effect */
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.6s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* PDF container with slide animation */
+#pdf-container {
+  position: absolute;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s ease, opacity 0.6s ease;
+  transform: translateX(0);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+
+#pdf-container.visible {
+  transform: translateX(-100%);
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* Active states */
+.content.active #overlay {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.layout.active .sidebar {
+  background: #eaeaea;
 }
 
 /*
